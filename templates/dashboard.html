@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!-- Organizations / Tenants Card -->
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Organizations (Tenants)</h3>
+        {% if organizations %}
+            <ul class="space-y-3">
+                {% for org in organizations %}
+                    <li class="p-3 bg-gray-50 rounded-md flex justify-between items-center border border-gray-100">
+                        <span class="font-medium text-gray-700">{{ org.name }}</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-mono">{{ org.slug }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500 text-sm">No organizations found. Go to the Django admin to create one!</p>
+        {% endif %}
+    </div>
+
+    <!-- Projects Card -->
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Projects</h3>
+        {% if projects %}
+            <ul class="space-y-3">
+                {% for project in projects %}
+                    <li class="p-3 bg-gray-50 rounded-md flex justify-between items-center border border-gray-100">
+                        <div>
+                            <a href="{% url 'project_detail' project.id %}" class="font-medium text-gray-700 hover:text-indigo-600 hover:underline transition">
+                                {{ project.name }}
+                            </a>
+                            <span class="text-xs text-gray-500 font-mono ml-2">[{{ project.key }}]</span>
+                        </div>
+                        <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full">{{ project.organization.name }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500 text-sm">No projects found. Go to the Django admin to create one!</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
